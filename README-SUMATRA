@@ -1,0 +1,19 @@
+This file is:
+  http://hg.openjdk.java.net/sumatra/sumatra-dev/scratch/raw-file/tip/README-SUMATRA
+
+For generic instructions on using OpenJDK repositories, see:
+  http://hg.openjdk.java.net/jdk8/jdk8/raw-file/tip/README
+
+The Sumatra repository forest is a recent copy of the following:
+  http://hg.openjdk.java.net/jdk8/jdk8
+  http://hg.openjdk.java.net/jdk8/jdk8/{corba,jaxp,jaxws,langtools,jdk,hotspot}
+
+The corba and jax* repositories are present for completeness,
+but changes are not expected there.
+
+There is an extra repository "scratch" which holds ad hoc stand-alone
+experiments or patches which are not integrated with the OpenJDK
+sources.  It is specific to Sumatra.
+
+More information on Project Sumatra repositories is in this wiki:
+  https://wikis.oracle.com/display/HotSpotInternals/SumatraRepositoryInfo
