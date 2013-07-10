@@ -27,6 +27,10 @@ package org.openjdk.sumatra.data.prototype;
 
 public class Matrix<T> {
 
+    public static interface Initializer<U> {
+        public U val(long row, long column);
+    }
+
     final ArrayLocation<T> arrayLoc;
     final long base;
     final long r_count;
@@ -71,6 +75,8 @@ public class Matrix<T> {
          * Max long is 2**63-1 , floor(sqrt) = 0xb504f333
          * For now, do division by smaller, check answer.
          */
+        if (b < 0xb504f333L)
+            return p;
         long q = p / a;
         if (q != b)
             throw new Error("Multiplicative overflow");
@@ -117,6 +123,12 @@ public class Matrix<T> {
     public final T val(long i, long j) {
         check(i,j);
         return arrayLoc.val(base + i * r_stride + j * c_stride);
+    }
+
+    public final void init(Initializer<T> body) {
+        for (long i = 0; i < r_count; i++)
+            for (long j = 0; j < c_count; j++)
+                arrayLoc.put(base + i * r_stride + j * c_stride, body.val(i,j));
     }
     public final long nRows() {
         return r_count;

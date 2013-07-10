@@ -264,7 +264,7 @@ public final class S extends AtomLayout<Short> {
 
         @Override
         final Layout<Short> atFixedOffset(int b) {
-            if (b < 0 || b + byteOrBitSize() > BITS_PER_BOX)
+            if (b < 0 || (long) b + byteOrBitSize() > BITS_PER_BOX)
                 throw new Error("Improper bit offset " + b);
             BitAt rv = fixedAccessors[b];
             if (rv == null) {
@@ -423,11 +423,10 @@ public final class S extends AtomLayout<Short> {
 
 
         // NOT PUBLIC, but visible to Location
-        @Override
         final void putPrim(Object base, long l, long b, short v) {
             l += (b >>> LOG_BITS_PER_BOX) << (LOG_BITS_PER_BOX - LOG_BITS_PER_BYTE);
             int ib0 = (int) b & (BITS_PER_BOX-1);
-            int ib = BITS_PER_BOX - ib0 - (int) byteOrBitSize();
+            int ib = BITS_PER_BOX - (int) ib0 - (int) byteOrBitSize();
             v = (short)(v & storeMask);
             if (ib >= 0) {
                 int container = getBox(base, l) & ~(storeMask << ib);
@@ -457,7 +456,6 @@ public final class S extends AtomLayout<Short> {
         }
 
         // NOT PUBLIC, but visible to Location
-        @Override
         short prim(Object base, long l, long b) {
             // There's endianness and container-size assumptions buried here.
             // Designed to work on big-endian hardware (Sparc)

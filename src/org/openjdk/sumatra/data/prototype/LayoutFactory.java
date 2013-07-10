@@ -83,6 +83,22 @@ public class LayoutFactory  {
     }
 
     /**
+     * Returns an already-defined layout for a class (either one of the
+     * builtin primitives or any boxed type defined through tuple).
+     *
+     * @param rt
+     * @return
+     * @throws Error
+     */
+    public <T> Layout<T> layoutFor(Class<T> rt) throws Error {
+        Layout<T> lo = layouts.get(rt);
+        if (lo == null) {
+            throw new Error("Could not find layout for type " + rt);
+        }
+       return lo;
+    }
+
+    /**
      * Returns a layout for a fixed-size array of an layout l.
      * This interface is provided to allow creation of arrays of bitfields
      * and arrays of pointers.
